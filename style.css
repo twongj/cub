@@ -1,0 +1,30 @@
+.navbar, .navbar-default {
+    min-height:30px;
+    margin-bottom:30px;
+    border-radius:0px;
+}
+
+#title {
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+#scramble {
+    font-size:16pt;
+}
+
+#timerDisplay {
+    font-size:96pt;
+}
+
+#table-times {
+    height:calc(100vh - 200px);
+}
+
+.btn-options {
+    margin-bottom:15px;
+}
+
+.centered {
+    text-align:center;
+}

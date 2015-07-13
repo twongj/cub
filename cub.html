@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <!-- Bootstrap CSS Theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
+    <!-- jQuery -->
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <!-- Bootstrap JS -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
+    <script src="https://code.angularjs.org/1.3.13/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.12.1/ui-bootstrap-tpls.min.js"></script>
+    <!-- Local -->
+    <script src="app.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <meta charset="UTF-8" />
+    <title>rileyTimer</title>
+</head>
+<body ng-app="rileyApp" ng-controller="rileyController" ng-keydown="keydown($event)" ng-keyup="keyup($event)">
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <h3 id="title">cub</h3>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 centered">
+            <svg width="300" height="240">
+                <g transform="translate(-20, -60)">
+                    <g transform="translate(25 70) rotate(22 0 0) skewX(22)" style="stroke:black">
+                        <rect x="0" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.LBU}}"></rect>
+                        <rect x="0" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.LB}}"></rect>
+                        <rect x="0" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.LDB}}"></rect>
+                        <rect x="25" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.LU}}"></rect>
+                        <rect x="25" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.L}}"></rect>
+                        <rect x="25" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.LD}}"></rect>
+                        <rect x="50" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.LUF}}"></rect>
+                        <rect x="50" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.LF}}"></rect>
+                        <rect x="50" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.LFD}}"></rect>
+                    </g>
+                    <g transform="translate(100 100) rotate(22 0 0) skewX(22)" style="stroke:black">
+                        <rect x="0" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.FLU}}"></rect>
+                        <rect x="0" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.FL}}"></rect>
+                        <rect x="0" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.FDL}}"></rect>
+                        <rect x="25" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.FU}}"></rect>
+                        <rect x="25" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.F}}"></rect>
+                        <rect x="25" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.FD}}"></rect>
+                        <rect x="50" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.FUR}}"></rect>
+                        <rect x="50" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.FR}}"></rect>
+                        <rect x="50" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.FRD}}"></rect>
+                    </g>
+                    <g transform="translate(170 127.5) rotate(-22 0 0) skewX(-22)" style="stroke:black">
+                        <rect x="0" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.RFU}}"></rect>
+                        <rect x="0" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.RF}}"></rect>
+                        <rect x="0" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.RDF}}"></rect>
+                        <rect x="25" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.RU}}"></rect>
+                        <rect x="25" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.R}}"></rect>
+                        <rect x="25" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.RD}}"></rect>
+                        <rect x="50" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.RUB}}"></rect>
+                        <rect x="50" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.RB}}"></rect>
+                        <rect x="50" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.RBD}}"></rect>
+                    </g>
+                    <g transform="translate(245 97) rotate(-22 0 0) skewX(-22)" style="stroke:black">
+                        <rect x="0" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.BRU}}"></rect>
+                        <rect x="0" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.BR}}"></rect>
+                        <rect x="0" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.BDR}}"></rect>
+                        <rect x="25" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.BU}}"></rect>
+                        <rect x="25" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.B}}"></rect>
+                        <rect x="25" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.BD}}"></rect>
+                        <rect x="50" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.BUL}}"></rect>
+                        <rect x="50" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.BL}}"></rect>
+                        <rect x="50" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.BLD}}"></rect>
+                    </g>
+                    <g transform="translate(167 70) rotate(43 0 0) skewX(-25) skewY(-25) scale(0.79, 0.9)" style="stroke:black">
+                        <rect x="0" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.ULB}}"></rect>
+                        <rect x="0" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.UL}}"></rect>
+                        <rect x="0" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.UFL}}"></rect>
+                        <rect x="25" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.UB}}"></rect>
+                        <rect x="25" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.U}}"></rect>
+                        <rect x="25" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.UF}}"></rect>
+                        <rect x="50" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.UBR}}"></rect>
+                        <rect x="50" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.UR}}"></rect>
+                        <rect x="50" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.URF}}"></rect>
+                    </g>
+                    <g transform="translate(100 185) rotate(22 0 0) skewX(22)" style="stroke:black">
+                        <rect x="0" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.DLF}}"></rect>
+                        <rect x="0" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.DL}}"></rect>
+                        <rect x="0" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.DBL}}"></rect>
+                        <rect x="25" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.DF}}"></rect>
+                        <rect x="25" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.D}}"></rect>
+                        <rect x="25" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.DB}}"></rect>
+                        <rect x="50" y="0" rx="1" ry="1" width="23" height="23" style="fill:{{cub.DFR}}"></rect>
+                        <rect x="50" y="25" rx="1" ry="1" width="23" height="23" style="fill:{{cub.DR}}"></rect>
+                        <rect x="50" y="50" rx="1" ry="1" width="23" height="23" style="fill:{{cub.DRB}}"></rect>
+                    </g>
+                </g>
+            </svg>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
