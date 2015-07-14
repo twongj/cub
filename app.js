@@ -2,9 +2,10 @@ var app = angular.module('cubApp', []);
 
 app.controller('cubController', function($scope) {
 
-    $scope.moves = ['U', 'D', 'L', 'R', 'F', 'B'];
-
-    // cube graphics
+    $scope.moves = {};
+    $scope.moves.faceMoves = ['U', 'D', 'L', 'R', 'F', 'B'];
+    $scope.moves.sliceMoves = ['M', 'E', 'S'];
+    $scope.moves.rotations = ['x', 'y', 'z'];
 
     $scope.color = {};
 
@@ -74,85 +75,85 @@ app.controller('cubController', function($scope) {
     $scope.cub.RBD = $scope.color.red;
     $scope.cub.BDR = $scope.color.blue;
 
+    $scope.cubSolved = isCubSolved($scope.cub);
+
+    $scope.$watch(function(scope) {
+        return scope.scramble;
+    }, function() {
+        $scope.performMoves(generate3x3Scramble(20));
+        $scope.cubSolved = isCubSolved($scope.cub);
+    });
+
+    $scope.newScramble = function() {
+        $scope.reset();
+        $scope.performMoves(generate3x3Scramble(20));
+    };
+
+    $scope.keypress = function(event) {
+        switch(event.keyCode) {
+            case 37: $scope.performy(); break;
+            case 38: $scope.performx(); break;
+            case 39: $scope.performyPrime(); break;
+            case 40: $scope.performxPrime(); break;
+            case 85: $scope.performU(); break;
+            case 68: $scope.performD(); break;
+            case 76: $scope.performL(); break;
+            case 82: $scope.performR(); break;
+            case 70: $scope.performF(); break;
+            case 66: $scope.performB(); break;
+            case 77: $scope.performM(); break;
+            case 69: $scope.performE(); break;
+            case 83: $scope.performS(); break;
+            case 88: $scope.performx(); break;
+            case 89: $scope.performy(); break;
+            case 90: $scope.performz(); break;
+        }
+        $scope.cubSolved = isCubSolved($scope.cub);
+    };
+
     $scope.performMoves = function(moves) {
         var movesArray = moves.split(" ");
-        for (i = 0; i < movesArray.length; i++) {
+        for (var i = 0; i < movesArray.length; i++) {
             switch (movesArray[i]) {
-                case 'U':
-                    $scope.performU();
-                    break;
-                case 'U\'':
-                    $scope.performU();
-                    $scope.performU();
-                    $scope.performU();
-                    break;
-                case 'U2':
-                    $scope.performU();
-                    $scope.performU();
-                    break;
-                case 'D':
-                    $scope.performDPrime();
-                    $scope.performDPrime();
-                    $scope.performDPrime();
-                    break;
-                case 'D\'':
-                    $scope.performDPrime();
-                    break;
-                case 'D2':
-                    $scope.performDPrime();
-                    $scope.performDPrime();
-                    break;
-                case 'L':
-                    $scope.performL();
-                    break;
-                case 'L\'':
-                    $scope.performL();
-                    $scope.performL();
-                    $scope.performL();
-                    break;
-                case 'L2':
-                    $scope.performL();
-                    $scope.performL();
-                    break;
-                case 'R':
-                    $scope.performRPrime();
-                    $scope.performRPrime();
-                    $scope.performRPrime();
-                    break;
-                case 'R\'':
-                    $scope.performRPrime();
-                    break;
-                case 'R2':
-                    $scope.performRPrime();
-                    $scope.performRPrime();
-                    break;
-                case 'F':
-                    $scope.performF();
-                    break;
-                case 'F\'':
-                    $scope.performF();
-                    $scope.performF();
-                    $scope.performF();
-                    break;
-                case 'F2':
-                    $scope.performF();
-                    $scope.performF();
-                    break;
-                case 'B':
-                    $scope.performBPrime();
-                    $scope.performBPrime();
-                    $scope.performBPrime();
-                    break;
-                case 'B\'':
-                    $scope.performBPrime();
-                    break;
-                case 'B2':
-                    $scope.performBPrime();
-                    $scope.performBPrime();
-                    break;
+                case 'U': $scope.performU(); break;
+                case 'U\'': $scope.performUPrime(); break;
+                case 'U2': $scope.performU2(); break;
+                case 'D': $scope.performD(); break;
+                case 'D\'': $scope.performDPrime(); break;
+                case 'D2': $scope.performD2(); break;
+                case 'L': $scope.performL(); break;
+                case 'L\'': $scope.performLPrime(); break;
+                case 'L2': $scope.performL2(); break;
+                case 'R': $scope.performR(); break;
+                case 'R\'': $scope.performRPrime(); break;
+                case 'R2': $scope.performR2(); break;
+                case 'F': $scope.performF(); break;
+                case 'F\'': $scope.performFPrime(); break;
+                case 'F2': $scope.performF2(); break;
+                case 'B': $scope.performB(); break;
+                case 'B\'': $scope.performBPrime(); break;
+                case 'B2': $scope.performB2(); break;
+                case 'M': $scope.performM(); break;
+                case 'M\'': $scope.performMPrime(); break;
+                case 'M2': $scope.performM2(); break;
+                case 'S': $scope.performS(); break;
+                case 'S\'': $scope.performSPrime(); break;
+                case 'S2': $scope.performS2(); break;
+                case 'S': $scope.performS(); break;
+                case 'S\'': $scope.performSPrime(); break;
+                case 'S2': $scope.performS2(); break;
+                case 'x': $scope.performx(); break;
+                case 'x\'': $scope.performxPrime(); break;
+                case 'x2': $scope.performx2(); break;
+                case 'y': $scope.performy(); break;
+                case 'y\'': $scope.performyPrime(); break;
+                case 'y2': $scope.performy2(); break;
+                case 'z': $scope.performz(); break;
+                case 'z\'': $scope.performzPrime(); break;
+                case 'z2': $scope.performz2(); break;
             }
         }
-        console.log(isCubSolved($scope.cub));
+        $scope.cubSolved = isCubSolved($scope.cub);
     };
 
     $scope.performU = function() {
@@ -183,6 +184,17 @@ app.controller('cubController', function($scope) {
         $scope.cub.LUF = temp;
     };
 
+    $scope.performUPrime = function() {
+        $scope.performU();
+        $scope.performU();
+        $scope.performU();
+    };
+
+    $scope.performU2 = function() {
+        $scope.performU();
+        $scope.performU();
+    };
+
     $scope.performDPrime = function() {
         var temp = $scope.cub.DR;
         $scope.cub.DR = $scope.cub.DB;
@@ -209,6 +221,17 @@ app.controller('cubController', function($scope) {
         $scope.cub.RBD = $scope.cub.BLD;
         $scope.cub.BLD = $scope.cub.LFD;
         $scope.cub.LFD = temp;
+    };
+
+    $scope.performD = function() {
+        $scope.performDPrime();
+        $scope.performDPrime();
+        $scope.performDPrime();
+    };
+
+    $scope.performD2 = function() {
+        $scope.performDPrime();
+        $scope.performDPrime();
     };
 
     $scope.performL = function() {
@@ -239,6 +262,17 @@ app.controller('cubController', function($scope) {
         $scope.cub.DLF = temp;
     };
 
+    $scope.performLPrime = function() {
+        $scope.performL();
+        $scope.performL();
+        $scope.performL();
+    };
+
+    $scope.performL2 = function() {
+        $scope.performL();
+        $scope.performL();
+    };
+
     $scope.performRPrime = function() {
         var temp = $scope.cub.RU;
         $scope.cub.RU = $scope.cub.RB;
@@ -265,6 +299,17 @@ app.controller('cubController', function($scope) {
         $scope.cub.UBR = $scope.cub.BDR;
         $scope.cub.BDR = $scope.cub.DFR;
         $scope.cub.DFR = temp;
+    };
+
+    $scope.performR = function() {
+        $scope.performRPrime();
+        $scope.performRPrime();
+        $scope.performRPrime();
+    };
+
+    $scope.performR2 = function() {
+        $scope.performRPrime();
+        $scope.performRPrime();
     };
 
     $scope.performF = function() {
@@ -295,6 +340,17 @@ app.controller('cubController', function($scope) {
         $scope.cub.DFR = temp;
     };
 
+    $scope.performFPrime = function() {
+        $scope.performF();
+        $scope.performF();
+        $scope.performF();
+    };
+
+    $scope.performF2 = function() {
+        $scope.performF();
+        $scope.performF();
+    };
+
     $scope.performBPrime = function() {
         var temp = $scope.cub.BU;
         $scope.cub.BU = $scope.cub.BL;
@@ -321,6 +377,167 @@ app.controller('cubController', function($scope) {
         $scope.cub.ULB = $scope.cub.LDB;
         $scope.cub.LDB = $scope.cub.DRB;
         $scope.cub.DRB = temp;
+    };
+
+    $scope.performB = function() {
+        $scope.performBPrime();
+        $scope.performBPrime();
+        $scope.performBPrime();
+    };
+
+    $scope.performB2 = function() {
+        $scope.performBPrime();
+        $scope.performBPrime();
+    };
+
+    $scope.performM = function() {
+        var temp = $scope.cub.U;
+        $scope.cub.U = $scope.cub.B;
+        $scope.cub.B = $scope.cub.D;
+        $scope.cub.D = $scope.cub.F;
+        $scope.cub.F = temp;
+        temp = $scope.cub.UF;
+        $scope.cub.UF = $scope.cub.BU;
+        $scope.cub.BU = $scope.cub.DB;
+        $scope.cub.DB = $scope.cub.FD;
+        $scope.cub.FD = temp;
+        temp = $scope.cub.FU;
+        $scope.cub.FU = $scope.cub.UB;
+        $scope.cub.UB = $scope.cub.BD;
+        $scope.cub.BD = $scope.cub.DF;
+        $scope.cub.DF = temp;
+    };
+
+    $scope.performMPrime = function() {
+        $scope.performM();
+        $scope.performM();
+        $scope.performM();
+    };
+
+    $scope.performM2 = function() {
+        $scope.performM();
+        $scope.performM();
+    };
+
+    $scope.performS = function() {
+        var temp = $scope.cub.U;
+        $scope.cub.U = $scope.cub.L;
+        $scope.cub.L = $scope.cub.D;
+        $scope.cub.D = $scope.cub.R;
+        $scope.cub.R = temp;
+        temp = $scope.cub.UR;
+        $scope.cub.UR = $scope.cub.LU;
+        $scope.cub.LU = $scope.cub.DL;
+        $scope.cub.DL = $scope.cub.RD;
+        $scope.cub.RD = temp;
+        temp = $scope.cub.RU;
+        $scope.cub.RU = $scope.cub.UL;
+        $scope.cub.UL = $scope.cub.LD;
+        $scope.cub.LD = $scope.cub.DR;
+        $scope.cub.DR = temp;
+    };
+
+    $scope.performSPrime = function() {
+        $scope.performS();
+        $scope.performS();
+        $scope.performS();
+    };
+
+    $scope.performS2 = function() {
+        $scope.performS();
+        $scope.performS();
+    };
+
+    $scope.performE = function() {
+        var temp = $scope.cub.F;
+        $scope.cub.F = $scope.cub.L;
+        $scope.cub.L = $scope.cub.B;
+        $scope.cub.B = $scope.cub.R;
+        $scope.cub.R = temp;
+        temp = $scope.cub.FR;
+        $scope.cub.FR = $scope.cub.LF;
+        $scope.cub.LF = $scope.cub.BL;
+        $scope.cub.BL = $scope.cub.RB;
+        $scope.cub.RB = temp;
+        temp = $scope.cub.RF;
+        $scope.cub.RF = $scope.cub.FL;
+        $scope.cub.FL = $scope.cub.LB;
+        $scope.cub.LB = $scope.cub.BR;
+        $scope.cub.BR = temp;
+    };
+
+    $scope.performEPrime = function() {
+        $scope.performE();
+        $scope.performE();
+        $scope.performE();
+    };
+
+    $scope.performE2 = function() {
+        $scope.performE();
+        $scope.performE();
+    };
+
+    $scope.performx = function() {
+        $scope.performLPrime();
+        $scope.performMPrime();
+        $scope.performR();
+    };
+
+    $scope.performxPrime = function() {
+        $scope.performL();
+        $scope.performM();
+        $scope.performRPrime();
+    };
+
+    $scope.performx2 = function() {
+        $scope.performLPrime();
+        $scope.performLPrime();
+        $scope.performMPrime();
+        $scope.performMPrime();
+        $scope.performR();
+        $scope.performR();
+    };
+
+    $scope.performy = function() {
+        $scope.performU();
+        $scope.performEPrime();
+        $scope.performDPrime();
+    };
+
+    $scope.performyPrime = function() {
+        $scope.performUPrime();
+        $scope.performE();
+        $scope.performD();
+    };
+
+    $scope.performy2 = function() {
+        $scope.performU();
+        $scope.performU();
+        $scope.performEPrime();
+        $scope.performEPrime();
+        $scope.performDPrime();
+        $scope.performDPrime();
+    };
+
+    $scope.performz = function() {
+        $scope.performF();
+        $scope.performS();
+        $scope.performBPrime();
+    };
+
+    $scope.performzPrime = function() {
+        $scope.performFPrime();
+        $scope.performSPrime();
+        $scope.performB();
+    };
+
+    $scope.performz2 = function() {
+        $scope.performF();
+        $scope.performF();
+        $scope.performS();
+        $scope.performS();
+        $scope.performBPrime();
+        $scope.performBPrime();
     };
 
     $scope.reset = function() {
@@ -433,71 +650,5 @@ function generate3x3Scramble(length) {
 }
 
 function isCubSolved(cub) {
-
-    var color = {};
-    color.white = '#ffffff';
-    color.yellow = '#ffff00';
-    color.orange = '#ff8000';
-    color.red = '#ff0000';
-    color.green = '#00ff00';
-    color.blue = '#0000ff';
-
-    if (cub.U != color.white) return false;
-    if (cub.D != color.yellow) return false;
-    if (cub.L != color.orange) return false;
-    if (cub.R != color.red) return false;
-    if (cub.F != color.green) return false;
-    if (cub.B != color.blue) return false;
-
-    if (cub.UR != color.white) return false;
-    if (cub.RU != color.red) return false;
-    if (cub.UF != color.white) return false;
-    if (cub.FU != color.green) return false;
-    if (cub.UL != color.white) return false;
-    if (cub.LU != color.orange) return false;
-    if (cub.UB != color.white) return false;
-    if (cub.BU != color.blue) return false;
-    if (cub.DR != color.yellow) return false;
-    if (cub.RD != color.red) return false;
-    if (cub.DF != color.yellow) return false;
-    if (cub.FD != color.green) return false;
-    if (cub.DL != color.yellow) return false;
-    if (cub.LD != color.orange) return false;
-    if (cub.DB != color.yellow) return false;
-    if (cub.BD != color.blue) return false;
-    if (cub.FL != color.green) return false;
-    if (cub.LF != color.orange) return false;
-    if (cub.FR != color.green) return false;
-    if (cub.RF != color.red) return false;
-    if (cub.BL != color.blue) return false;
-    if (cub.LB != color.orange) return false;
-    if (cub.BR != color.blue) return false;
-    if (cub.RB != color.red) return false;
-
-    if (cub.URF != color.white) return false;
-    if (cub.RFU != color.red) return false;
-    if (cub.FUR != color.green) return false;
-    if (cub.UFL != color.white) return false;
-    if (cub.FLU != color.green) return false;
-    if (cub.LUF != color.orange) return false;
-    if (cub.ULB != color.white) return false;
-    if (cub.LBU != color.orange) return false;
-    if (cub.BUL != color.blue) return false;
-    if (cub.UBR != color.white) return false;
-    if (cub.BRU != color.blue) return false;
-    if (cub.RUB != color.red) return false;
-    if (cub.DFR != color.yellow) return false;
-    if (cub.FRD != color.green) return false;
-    if (cub.RDF != color.red) return false;
-    if (cub.DLF != color.yellow) return false;
-    if (cub.LFD != color.orange) return false;
-    if (cub.FDL != color.green) return false;
-    if (cub.DBL != color.yellow) return false;
-    if (cub.BLD != color.blue) return false;
-    if (cub.LDB != color.orange) return false;
-    if (cub.DRB != color.yellow) return false;
-    if (cub.RBD != color.red) return false;
-    if (cub.BDR != color.blue) return false;
-
-    return true;
+    return ((cub.UR == cub.U) && (cub.RU == cub.R) && (cub.UF == cub.U) && (cub.FU == cub.F) && (cub.UL == cub.U) && (cub.LU == cub.L) && (cub.UB == cub.U) && (cub.BU == cub.B) && (cub.DR == cub.D) && (cub.RD == cub.R) && (cub.DF == cub.D) && (cub.FD == cub.F) && (cub.DL == cub.D) && (cub.LD == cub.L) && (cub.DB == cub.D) && (cub.BD == cub.B) && (cub.FL == cub.F) && (cub.LF == cub.L) && (cub.FR == cub.F) && (cub.RF == cub.R) && (cub.BL == cub.B) && (cub.LB == cub.L) && (cub.BR == cub.B) && (cub.RB == cub.R) && (cub.URF == cub.U) && (cub.RFU == cub.R) && (cub.FUR == cub.F) && (cub.UFL == cub.U) && (cub.FLU == cub.F) && (cub.LUF == cub.L) && (cub.ULB == cub.U) && (cub.LBU == cub.L) && (cub.BUL == cub.B) && (cub.UBR == cub.U) && (cub.BRU == cub.B) && (cub.RUB == cub.R) && (cub.DFR == cub.D) && (cub.FRD == cub.F) && (cub.RDF == cub.R) && (cub.DLF == cub.D) && (cub.LFD == cub.L) && (cub.FDL == cub.F) && (cub.DBL == cub.D) && (cub.BLD == cub.B) && (cub.LDB == cub.L) && (cub.DRB == cub.D) && (cub.RBD == cub.R) && (cub.BDR == cub.B));
 }
