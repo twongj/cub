@@ -1,114 +1,8 @@
-var app = angular.module('rileyApp', ['ui.bootstrap']);
+var app = angular.module('cubApp', []);
 
-app.controller('rileyController', function($scope, $interval, $http, $log) {
+app.controller('cubController', function($scope) {
 
-    $scope.scrambleTypes = ['Rubik\'s Cube', '4x4 Cube', '5x5 Cube', '2x2 Cube'];
-
-    $scope.sessions = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-    // solves
-    $http.get('/solves').success(function(response) {
-        $scope.solves = response;
-        $scope.solves.forEach(function(solve) {
-            solve.displayTime = (solve.result/1000).toFixed(2);
-        });
-    });
-
-    $scope.resetSession = function() {
-        if (confirm('Reset Session?')) {
-            $http.delete('/solves/reset').success(function(response) {
-                $scope.solves = [];
-            });
-        }
-    };
-
-    $scope.removeSolve = function(solve) {
-        if (confirm('Delete Solve: ' + solve.displayTime + '?')) {
-            $http.delete('/solves/remove/' + solve.date).success(function(response) {
-                $scope.solves = response;
-                $scope.solves.forEach(function(solve) {
-                    solve.displayTime = (solve.result/1000).toFixed(2);
-                });
-            });
-        }
-    };
-
-    // timer
-    $scope.now = 0; // updated using Date.now()
-    $scope.time = 0;
-    $scope.timerDisplay = '0.00';
-    $scope.timer_delay = 10;
-    $scope.interval = null;
-
-    $scope.scramble = generate3x3Scramble(20);
-
-    $scope.$watch(function(scope) {
-        return scope.scramble;
-    }, function() {
-        $scope.reset();
-        $scope.performMoves($scope.scramble);
-    });
-
-    $scope.isTiming = 0;
-    $scope.isKeydown = 0;
-    $scope.isTyping = 0;
-
-    $scope.keydown = function(event) {
-        if ((event.which === 32) && ($scope.isKeydown === 0) && ($scope.isTyping === 0)) {
-            $scope.isKeydown = 1;
-            if ($scope.isTiming === 0) {
-                $scope.timerDisplay = '0.00';
-                $scope.timerStyle = {'color':'#33CC00'};
-            } else if ($scope.isTiming === 1) {
-                $scope.stopTimer();
-                var solve = {};
-                solve.time = $scope.time;
-                solve.penalty = 0;
-                solve.scramble = $scope.scramble;
-                solve.comment = '';
-                solve.date = Date.now();
-                $http.post('/solves/submit', solve).success(function(response) {
-                    $scope.solves = response;
-                    $scope.solves.forEach(function(solve) {
-                        solve.displayTime = (solve.result/1000).toFixed(2);
-                    });
-                });
-                $scope.now = 0;
-                $scope.time = 0;
-                $scope.interval = null;
-                $scope.scramble = generate3x3Scramble(20);
-            }
-        }
-    };
-
-    $scope.keyup = function(event) {
-        if ((event.which === 32) && ($scope.isKeydown === 1) && ($scope.isTyping === 0)) {
-            $scope.isKeydown = 0;
-            if ($scope.isTiming === 0) {
-                $scope.isTiming = 1;
-                $scope.timerStyle = {'color': 'black'};
-                $scope.startTimer();
-            } else if ($scope.isTiming === 1) {
-                $scope.isTiming = 0;
-            }
-        }
-    };
-
-    $scope.startTimer = function() {
-        $scope.now = Date.now();
-
-        $scope.interval = $interval(function() {
-            var tmp = Date.now();
-            var offset = tmp - $scope.now;
-            $scope.time += (offset);
-            $scope.timerDisplay = ($scope.time/1000).toFixed(2);
-            $scope.now = tmp;
-        }, $scope.timerDelay);
-    };
-
-    $scope.stopTimer = function() {
-        $interval.cancel($scope.interval);
-    };
+    $scope.moves = ['U', 'D', 'L', 'R', 'F', 'B'];
 
     // cube graphics
 
@@ -179,12 +73,6 @@ app.controller('rileyController', function($scope, $interval, $http, $log) {
     $scope.cub.DRB = $scope.color.yellow;
     $scope.cub.RBD = $scope.color.red;
     $scope.cub.BDR = $scope.color.blue;
-
-    $scope.newScramble = function() {
-        $scope.scramble = generate3x3Scramble(20);
-        $scope.reset();
-        $scope.performMoves($scope.scramble);
-    }
 
     $scope.performMoves = function(moves) {
         var movesArray = moves.split(" ");
@@ -264,6 +152,7 @@ app.controller('rileyController', function($scope, $interval, $http, $log) {
                     break;
             }
         }
+        console.log(isCubSolved($scope.cub));
     };
 
     $scope.performU = function() {
@@ -541,4 +430,74 @@ function generate3x3Scramble(length) {
             scramble = scramble.concat(" ");
     }
     return scramble;
+}
+
+function isCubSolved(cub) {
+
+    var color = {};
+    color.white = '#ffffff';
+    color.yellow = '#ffff00';
+    color.orange = '#ff8000';
+    color.red = '#ff0000';
+    color.green = '#00ff00';
+    color.blue = '#0000ff';
+
+    if (cub.U != color.white) return false;
+    if (cub.D != color.yellow) return false;
+    if (cub.L != color.orange) return false;
+    if (cub.R != color.red) return false;
+    if (cub.F != color.green) return false;
+    if (cub.B != color.blue) return false;
+
+    if (cub.UR != color.white) return false;
+    if (cub.RU != color.red) return false;
+    if (cub.UF != color.white) return false;
+    if (cub.FU != color.green) return false;
+    if (cub.UL != color.white) return false;
+    if (cub.LU != color.orange) return false;
+    if (cub.UB != color.white) return false;
+    if (cub.BU != color.blue) return false;
+    if (cub.DR != color.yellow) return false;
+    if (cub.RD != color.red) return false;
+    if (cub.DF != color.yellow) return false;
+    if (cub.FD != color.green) return false;
+    if (cub.DL != color.yellow) return false;
+    if (cub.LD != color.orange) return false;
+    if (cub.DB != color.yellow) return false;
+    if (cub.BD != color.blue) return false;
+    if (cub.FL != color.green) return false;
+    if (cub.LF != color.orange) return false;
+    if (cub.FR != color.green) return false;
+    if (cub.RF != color.red) return false;
+    if (cub.BL != color.blue) return false;
+    if (cub.LB != color.orange) return false;
+    if (cub.BR != color.blue) return false;
+    if (cub.RB != color.red) return false;
+
+    if (cub.URF != color.white) return false;
+    if (cub.RFU != color.red) return false;
+    if (cub.FUR != color.green) return false;
+    if (cub.UFL != color.white) return false;
+    if (cub.FLU != color.green) return false;
+    if (cub.LUF != color.orange) return false;
+    if (cub.ULB != color.white) return false;
+    if (cub.LBU != color.orange) return false;
+    if (cub.BUL != color.blue) return false;
+    if (cub.UBR != color.white) return false;
+    if (cub.BRU != color.blue) return false;
+    if (cub.RUB != color.red) return false;
+    if (cub.DFR != color.yellow) return false;
+    if (cub.FRD != color.green) return false;
+    if (cub.RDF != color.red) return false;
+    if (cub.DLF != color.yellow) return false;
+    if (cub.LFD != color.orange) return false;
+    if (cub.FDL != color.green) return false;
+    if (cub.DBL != color.yellow) return false;
+    if (cub.BLD != color.blue) return false;
+    if (cub.LDB != color.orange) return false;
+    if (cub.DRB != color.yellow) return false;
+    if (cub.RBD != color.red) return false;
+    if (cub.BDR != color.blue) return false;
+
+    return true;
 }

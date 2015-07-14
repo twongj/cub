@@ -9,22 +9,16 @@
     margin-bottom:5px;
 }
 
-#scramble {
-    font-size:16pt;
-}
-
-#timerDisplay {
-    font-size:96pt;
-}
-
-#table-times {
-    height:calc(100vh - 200px);
-}
-
-.btn-options {
-    margin-bottom:15px;
-}
-
 .centered {
     text-align:center;
+}
+
+.movesButtonsList {
+    list-style-type:none;
+}
+
+.movesButton {
+    height:50px;
+    width:50px;
+    margin:5px;
 }

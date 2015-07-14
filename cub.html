@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <!-- Bootstrap CSS Theme -->
@@ -22,7 +20,7 @@
     <meta charset="UTF-8" />
     <title>cub</title>
 </head>
-<body ng-app="rileyApp" ng-controller="rileyController" ng-keydown="keydown($event)" ng-keyup="keyup($event)">
+<body ng-app="cubApp" ng-controller="cubController">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <h3 id="title">cub</h3>
@@ -30,7 +28,7 @@
 </nav>
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xs-12 centered">
+        <div class="col-md-6 centered">
             <svg width="300" height="240">
                 <g transform="translate(-20, -60)">
                     <g transform="translate(25 70) rotate(22 0 0) skewX(22)" style="stroke:black">
@@ -101,6 +99,15 @@
                     </g>
                 </g>
             </svg>
+        </div>
+        <div class="col-md-6 centered">
+            <ul class="movesButtonsList">
+                <li class="movesButtons" ng-repeat="move in moves">
+                    <button type="button" class="btn btn-default movesButton" ng-click="performMoves(move)" ng-bind="move"></button>
+                    <button type="button" class="btn btn-default movesButton" ng-click="performMoves(move + '\'')" ng-bind="move + '\''"></button>
+                    <button type="button" class="btn btn-default movesButton" ng-click="performMoves(move + '2')" ng-bind="move + '2'"></button>
+                </li>
+            </ul>
         </div>
     </div>
 </div>
