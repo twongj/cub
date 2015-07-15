@@ -142,9 +142,9 @@ app.controller('cubController', function($scope) {
                 case 'M': $scope.performM(); break;
                 case 'M\'': $scope.performMPrime(); break;
                 case 'M2': $scope.performM2(); break;
-                case 'S': $scope.performS(); break;
-                case 'S\'': $scope.performSPrime(); break;
-                case 'S2': $scope.performS2(); break;
+                case 'E': $scope.performE(); break;
+                case 'E\'': $scope.performEPrime(); break;
+                case 'E2': $scope.performE2(); break;
                 case 'S': $scope.performS(); break;
                 case 'S\'': $scope.performSPrime(); break;
                 case 'S2': $scope.performS2(); break;
