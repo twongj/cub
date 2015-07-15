@@ -101,8 +101,8 @@ app.controller('cubController', function($scope) {
             case 72: $scope.performF(); break; // H
             case 83: $scope.performD(); break; // S
             case 76: $scope.performDPrime(); break; // L
-            case 87: $scope.performBPrime(); break; // W
-            case 79: $scope.performB(); break; // O
+            case 87: $scope.performB(); break; // W
+            case 79: $scope.performBPrime(); break; // O
             case 89: $scope.performx(); break; // Y
             case 78: $scope.performxPrime(); break; // N
             case 65: $scope.performyPrime(); break; // A
