@@ -91,22 +91,28 @@ app.controller('cubController', function($scope) {
 
     $scope.keypress = function(event) {
         switch(event.keyCode) {
-            case 37: $scope.performy(); break;
-            case 38: $scope.performx(); break;
-            case 39: $scope.performyPrime(); break;
-            case 40: $scope.performxPrime(); break;
-            case 85: $scope.performU(); break;
-            case 68: $scope.performD(); break;
-            case 76: $scope.performL(); break;
-            case 82: $scope.performR(); break;
-            case 70: $scope.performF(); break;
-            case 66: $scope.performB(); break;
-            case 77: $scope.performM(); break;
-            case 69: $scope.performE(); break;
-            case 83: $scope.performS(); break;
-            case 88: $scope.performx(); break;
-            case 89: $scope.performy(); break;
-            case 90: $scope.performz(); break;
+            case 69: $scope.performLPrime(); break; // E
+            case 68: $scope.performL(); break; // D
+            case 73: $scope.performR(); break; // I
+            case 75: $scope.performRPrime(); break; // K
+            case 70: $scope.performUPrime(); break; // F
+            case 74: $scope.performU(); break; // J
+            case 71: $scope.performFPrime(); break; // G
+            case 72: $scope.performF(); break; // H
+            case 83: $scope.performD(); break; // S
+            case 76: $scope.performDPrime(); break; // L
+            case 87: $scope.performBPrime(); break; // W
+            case 79: $scope.performB(); break; // O
+            case 89: $scope.performx(); break; // Y
+            case 78: $scope.performxPrime(); break; // N
+            case 65: $scope.performyPrime(); break; // A
+            case 186: $scope.performy(); break; // ;
+            case 80: $scope.performz(); break; // P
+            case 81: $scope.performzPrime(); break; // Q
+            case 37: $scope.performy(); break; // Left
+            case 38: $scope.performx(); break; // Up
+            case 39: $scope.performyPrime(); break; // Right
+            case 40: $scope.performxPrime(); break; // Down
         }
         $scope.cubSolved = isCubSolved($scope.cub);
     };
