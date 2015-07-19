@@ -13,7 +13,8 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <h4 id="title">
-            Cub
+            <label class="titleLabel">Cub</label>
+            <label class="titleLabel" ng-show="cubSolved">Solved</label>
             <div class="pull-right">
                 <a ng-click="reset()" target="blank">Solve</a> |
                 <a ng-click="newScramble()" target="blank">Scramble</a> |
@@ -93,10 +94,7 @@
     </svg>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xs-12 centered" ng-show="cubSolved">
-                <h1>Solved</h1>
-            </div>
-            <div class="col-sm-6 controls">
+            <div class="col-md-4 controls">
                 <ul class="movesButtonsList">
                     <li class="movesButtonsListElement" ng-repeat="move in moves.faceMoves">
                         <div class="btn-group-vertical movesButtonGroup">
@@ -107,7 +105,7 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-sm-6 controls">
+            <div class="col-md-4 controls">
                 <ul class="movesButtonsList">
                     <li class="movesButtonsListElement" ng-repeat="move in moves.sliceMoves">
                         <div class="btn-group-vertical movesButtonGroup">
@@ -117,6 +115,17 @@
                         </div>
                     </li>
                     <li class="movesButtonsListElement" ng-repeat="move in moves.rotations">
+                        <div class="btn-group-vertical movesButtonGroup">
+                            <button type="button" class="btn btn-default movesButton" ng-click="performMoves(move)" ng-bind="move"></button>
+                            <button type="button" class="btn btn-default movesButton" ng-click="performMoves(move + '\'')" ng-bind="move + '\''"></button>
+                            <button type="button" class="btn btn-default movesButton" ng-click="performMoves(move + '2')" ng-bind="move + '2'"></button>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-4 controls">
+                <ul class="movesButtonsList">
+                    <li class="movesButtonsListElement" ng-repeat="move in moves.wideMoves">
                         <div class="btn-group-vertical movesButtonGroup">
                             <button type="button" class="btn btn-default movesButton" ng-click="performMoves(move)" ng-bind="move"></button>
                             <button type="button" class="btn btn-default movesButton" ng-click="performMoves(move + '\'')" ng-bind="move + '\''"></button>

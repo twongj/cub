@@ -19,6 +19,10 @@ svg {
     margin-bottom:5px;
 }
 
+.titleLabel {
+    margin:0px;
+}
+
 .centered {
     text-align:center;
 }
