@@ -28,14 +28,14 @@ angular.module('cubApp', []).controller('cubController', function($scope) {
             case 38: perform($scope.cub, 'x'); break; // Up
             case 39: perform($scope.cub, 'y\''); break; // Right
             case 40: perform($scope.cub, 'x\''); break; // Down
-            case 65: perform($scope.cub, 'y'); break; // A
+            case 65: perform($scope.cub, 'y\''); break; // A
             case 68: perform($scope.cub, 'L'); break; // D
             case 69: perform($scope.cub, 'L\''); break; // E
-            case 70: perform($scope.cub, 'U'); break; // F
-            case 71: perform($scope.cub, 'F'); break; // G
-            case 72: perform($scope.cub, 'F\''); break; // H
+            case 70: perform($scope.cub, 'U\''); break; // F
+            case 71: perform($scope.cub, 'F\''); break; // G
+            case 72: perform($scope.cub, 'F'); break; // H
             case 73: perform($scope.cub, 'R'); break; // I
-            case 74: perform($scope.cub, 'U\''); break; // J
+            case 74: perform($scope.cub, 'U'); break; // J
             case 75: perform($scope.cub, 'R\''); break; // K
             case 76: perform($scope.cub, 'D\''); break; // L
             case 77: perform($scope.cub, 'r\''); break; // M
@@ -49,7 +49,7 @@ angular.module('cubApp', []).controller('cubController', function($scope) {
             case 86: perform($scope.cub, 'l'); break; // V
             case 87: perform($scope.cub, 'B'); break; // W
             case 89: perform($scope.cub, 'x'); break; // Y
-            case 186: perform($scope.cub, 'y\''); break; // ;
+            case 186: perform($scope.cub, 'y'); break; // ;
         }
         $scope.cubSolved = isCubSolved($scope.cub);
     };
