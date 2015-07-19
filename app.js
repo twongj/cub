@@ -1,20 +1,26 @@
 angular.module('cubApp', []).controller('cubController', function($scope) {
 
-    $scope.moves = { faceMoves: ['U', 'D', 'L', 'R', 'F', 'B'], sliceMoves: ['M', 'E', 'S'],
-        rotations: ['x', 'y', 'z'], wideMoves: ['u', 'd', 'l', 'r', 'f', 'b']};
+    $scope.moves = {faceMoves:['U', 'D', 'L', 'R', 'F', 'B'], sliceMoves:['M', 'E', 'S'],
+        rotations:['x', 'y', 'z'], wideMoves:['u', 'd', 'l', 'r', 'f', 'b']};
 
     $scope.cub = {};
     $scope.scramble = genScramble(20);
     $scope.cubSolved = false;
 
     $scope.reset = function() {
-        reset($scope.cub);
+        newCub($scope.cub);
     };
 
     $scope.newScramble = function() {
         $scope.scramble = genScramble(20);
     };
 
+    $scope.performMoves = function(moves) {
+        perform($scope.cub, moves);
+        $scope.cubSolved = isCubSolved($scope.cub);
+    };
+
+    // keyboard shortcut mapping for moves
     $scope.keypress = function(event) {
         switch(event.keyCode) {
             case 32: perform($scope.cub, 'M\''); break; // Spacebar
@@ -48,35 +54,32 @@ angular.module('cubApp', []).controller('cubController', function($scope) {
         $scope.cubSolved = isCubSolved($scope.cub);
     };
 
-    $scope.performMoves = function(moves) {
-        perform($scope.cub, moves);
-        $scope.cubSolved = isCubSolved($scope.cub);
-    };
-
+    // perform scramble on cub when new scramble is generated
     $scope.$watch(function(scope) {
         return scope.scramble;
     }, function() {
-        reset($scope.cub);
+        newCub($scope.cub);
         $scope.performMoves($scope.scramble);
     });
 
 });
 
-function reset(cub) {
-    setColor(cub, ['U', 'UR', 'UF', 'UL', 'UB', 'URF', 'UFL', 'ULB', 'UBR'], '#ffffff'); // white
-    setColor(cub, ['D', 'DR', 'DF', 'DL', 'DB', 'DFR', 'DLF', 'DBL', 'DRB'], '#ffff00'); // yellow
-    setColor(cub, ['L', 'LU', 'LD', 'LF', 'LB', 'LUF', 'LBU', 'LFD', 'LDB'], '#ff8000'); // orange
-    setColor(cub, ['R', 'RU', 'RD', 'RF', 'RB', 'RFU', 'RUB', 'RDF', 'RBD'], '#ff0000'); // red
-    setColor(cub, ['F', 'FU', 'FD', 'FL', 'FR', 'FUR', 'FLU', 'FRD', 'FDL'], '#00ff00'); // green
-    setColor(cub, ['B', 'BU', 'BD', 'BL', 'BR', 'BUL', 'BRU', 'BLD', 'BDR'], '#0000ff'); // blue
-}
-
-function setColor(cub, stickers, color) {
+// initialize or reset the cub to the solved position
+function newCub(cub) {
+    var stickers = [{face:['U', 'UR', 'UF', 'UL', 'UB', 'URF', 'UFL', 'ULB', 'UBR'], color:'#ffffff' },
+        {face:['D', 'DR', 'DF', 'DL', 'DB', 'DFR', 'DLF', 'DBL', 'DRB'], color:'#ffff00'},
+        {face:['L', 'LU', 'LD', 'LF', 'LB', 'LUF', 'LBU', 'LFD', 'LDB'], color:'#ff8000'},
+        {face:['R', 'RU', 'RD', 'RF', 'RB', 'RFU', 'RUB', 'RDF', 'RBD'], color:'#ff0000'},
+        {face:['F', 'FU', 'FD', 'FL', 'FR', 'FUR', 'FLU', 'FRD', 'FDL'], color:'#00ff00'},
+        {face:['B', 'BU', 'BD', 'BL', 'BR', 'BUL', 'BRU', 'BLD', 'BDR'], color:'#0000ff'}];
     for (var i = 0; i < stickers.length; i++) {
-        cub[stickers[i]] = color;
+        for (var j = 0; j < stickers[i].face.length; j++) {
+            cub[stickers[i].face[j]] = stickers[i].color;
+        }
     }
 }
 
+// perform a string of moves on the cub
 function perform(cub, moves) {
     var movesArray = moves.split(" ");
     for (var i = 0; i < movesArray.length; i++) {
@@ -161,6 +164,7 @@ function perform(cub, moves) {
     }
 }
 
+// checks if the cub is solved
 function isCubSolved(cub) {
     return ((cub['UR'] == cub['U']) && (cub['RU'] == cub['R']) && (cub['UF'] == cub['U']) && (cub['FU'] == cub['F']) &&
     (cub['UL'] == cub['U']) && (cub['LU'] == cub['L']) && (cub['UB'] == cub['U']) && (cub['BU'] == cub['B']) &&
@@ -176,6 +180,7 @@ function isCubSolved(cub) {
     (cub['LDB'] == cub['L']) && (cub['DRB'] == cub['D']) && (cub['RBD'] == cub['R']) && (cub['BDR'] == cub['B']));
 }
 
+// generates a scramble of a given length
 function genScramble(length) {
     var prevMove = -1, secPrevMove = -1, scramble = "";
     for (i = 0; i < length; i++) {
