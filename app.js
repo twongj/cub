@@ -186,8 +186,9 @@ function genScramble(length) {
     for (i = 0; i < length; i++) {
         var move = Math.floor((Math.random() * 6)),
           dir = Math.floor((Math.random() * 3));
-        if (((prevMove == 0) && (secPrevMove != 1)) || ((prevMove == 1) && (secPrevMove != 0)) || ((prevMove == 2) && (secPrevMove != 3)) ||
-          ((prevMove == 3) && (secPrevMove != 2)) || ((prevMove == 4) && (secPrevMove != 5)) || ((prevMove == 5) && (secPrevMove != 4)))
+        if (((prevMove == 0) && (secPrevMove != 1)) || ((prevMove == 1) && (secPrevMove != 0)) ||
+          ((prevMove == 2) && (secPrevMove != 3)) || ((prevMove == 3) && (secPrevMove != 2)) ||
+          ((prevMove == 4) && (secPrevMove != 5)) || ((prevMove == 5) && (secPrevMove != 4)))
             secPrevMove = -1;
         while ((move == prevMove) || (move == secPrevMove))
             move = Math.floor((Math.random() * 6));
